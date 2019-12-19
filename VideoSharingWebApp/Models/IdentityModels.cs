@@ -29,5 +29,7 @@ namespace VideoSharingWebApp.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<VideoSharingWebApp.Models.VideoModel> VideoModels { get; set; }
     }
 }
