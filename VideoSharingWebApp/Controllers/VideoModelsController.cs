@@ -75,17 +75,23 @@ namespace VideoSharingWebApp.Controllers
         {
             return View();
         }
+        //Uploading File from view to server.
         [HttpPost]
         public ActionResult AddVideo(HttpPostedFileBase file)
 
         {
-            
-            path = Path.Combine(Server.MapPath("~/Videos"),
-                                        Path.GetFileName(file.FileName));
-            file.SaveAs(path);
-            path = @"/Videos/" + Path.GetFileName(file.FileName);
-            ViewBag.Message = "File uploaded successfully";
-            return RedirectToAction("Create");
+            path = file.FileName;
+            //Check if file is mp4.
+            if (path.EndsWith(".mp4"))
+            {
+                path = Path.Combine(Server.MapPath("~/Videos"),
+                                            Path.GetFileName(file.FileName));
+                file.SaveAs(path);
+                path = @"/Videos/" + Path.GetFileName(file.FileName);
+                ViewBag.Message = "File uploaded successfully";
+                return RedirectToAction("Create");
+            }
+            return View();
         }
         // GET: VideoModels/Edit/5
         public ActionResult Edit(int? id)
