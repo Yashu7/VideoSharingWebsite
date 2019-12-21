@@ -4,43 +4,30 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+
 
 <div>
-    <video width="400" controls>
+    <h3>@Html.DisplayFor(model => model.Title)</h3>
+    <video style=""  width=1000
+  height=600 controls>
         <source src="@Html.DisplayFor(model => model.Path)" type="video/mp4">
-        <source src="@Html.DisplayFor(model => model.Path)" type="video/ogg">
+        
         Your browser does not support HTML5 video.
     </video>
-    <h4>VideoModel</h4>
-    <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.UserId)
+            Creator:
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.UserId)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
+       
 
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Path)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Path)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.UploadTime)
+            Date Uploaded:
         </dt>
 
         <dd>

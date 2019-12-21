@@ -251,6 +251,7 @@
     <Content Include="Views\VideoModels\Details.cshtml" />
     <Content Include="Views\VideoModels\Edit.cshtml" />
     <Content Include="Views\VideoModels\Index.cshtml" />
+    <Content Include="Views\VideoModels\AddVideo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

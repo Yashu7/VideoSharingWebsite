@@ -21,7 +21,7 @@ namespace VideoSharingWebApp.Controllers
             VideoModel model = new VideoModel();
             
             string path = Path.Combine(Server.MapPath("~/Videos"),
-                Path.GetFileName(file.FileName));
+                                         Path.GetFileName(file.FileName));
             file.SaveAs(path);
             model.Path = path;
             ViewBag.Message = "File uploaded successfully";

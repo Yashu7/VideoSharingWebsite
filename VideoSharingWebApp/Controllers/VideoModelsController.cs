@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -45,13 +46,17 @@ namespace VideoSharingWebApp.Controllers
         // POST: VideoModels/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        //public string path = "";
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,UserId,Title,Path,UploadTime")] VideoModel videoModel)
         {
             if (ModelState.IsValid)
             {
+                
+                //videoModel.Path = path;
                 videoModel.UserId = User.Identity.GetUserId();
+                videoModel.UploadTime = DateTime.Today;
                 db.VideoModels.Add(videoModel);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -59,7 +64,27 @@ namespace VideoSharingWebApp.Controllers
 
             return View(videoModel);
         }
+        public static string path;
+        public static string PathToVideo()
+        {
+            return path;
+        }
+        public ActionResult AddVideo()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult AddVideo(HttpPostedFileBase file)
 
+        {
+            
+            path = Path.Combine(Server.MapPath("~/Videos"),
+                                        Path.GetFileName(file.FileName));
+            file.SaveAs(path);
+            path = @"/Videos/" + Path.GetFileName(file.FileName);
+            ViewBag.Message = "File uploaded successfully";
+            return RedirectToAction("Create");
+        }
         // GET: VideoModels/Edit/5
         public ActionResult Edit(int? id)
         {
