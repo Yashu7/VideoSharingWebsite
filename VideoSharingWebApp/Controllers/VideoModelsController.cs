@@ -14,6 +14,7 @@ namespace VideoSharingWebApp.Controllers
 {
     public class VideoModelsController : Controller
     {
+        public static string path;
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: VideoModels
@@ -56,7 +57,7 @@ namespace VideoSharingWebApp.Controllers
             {
                 
                 //videoModel.Path = path;
-                videoModel.UserId = User.Identity.GetUserId();
+                videoModel.UserId = User.Identity.GetUserName();
                 videoModel.UploadTime = DateTime.Today;
                 db.VideoModels.Add(videoModel);
                 db.SaveChanges();
@@ -65,7 +66,7 @@ namespace VideoSharingWebApp.Controllers
 
             return View(videoModel);
         }
-        public static string path;
+        
         public static string PathToVideo()
         {
             return path;

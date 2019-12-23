@@ -3,6 +3,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace VideoSharingWebApp.Models
 {
+    
+   
     public class ExternalLoginConfirmationViewModel
     {
         [Required]
@@ -48,7 +50,10 @@ namespace VideoSharingWebApp.Models
 
     public class LoginViewModel
     {
-        [Required]
+        
+        [Display(Name = "Username")]
+        public string Username { get; set; }
+        
         [Display(Name = "Email")]
         [EmailAddress]
         public string Email { get; set; }
@@ -64,6 +69,10 @@ namespace VideoSharingWebApp.Models
 
     public class RegisterViewModel
     {
+        [Required]
+        [StringLength(50,MinimumLength = 3)]
+        [Display(Name = "Username")]
+        public string Username { get; set; }
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
