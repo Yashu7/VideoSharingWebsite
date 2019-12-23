@@ -7,7 +7,7 @@
 
 
 <div>
-    <h3>@Html.DisplayFor(model => model.Title)</h3>
+    
     <video style=""  width=1000
   height=600 controls>
         <source src="@Html.DisplayFor(model => model.Path)" type="video/mp4">
@@ -16,6 +16,12 @@
     </video>
     <dl class="dl-horizontal">
         <dt>
+            Title:
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+        <dt>
             Creator:
         </dt>
 
@@ -23,15 +29,15 @@
             @Html.DisplayFor(model => model.UserId)
         </dd>
 
-       
-
-
         <dt>
             Date Uploaded:
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.UploadTime)
+            @Html.DisplayFor(model => model.UploadTime.Day)
+            @Html.DisplayFor(model => model.UploadTime.Month)
+            @Html.DisplayFor(model => model.UploadTime.Year)
+            
         </dd>
 
     </dl>

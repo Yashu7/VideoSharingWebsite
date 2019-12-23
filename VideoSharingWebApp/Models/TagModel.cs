@@ -10,4 +10,8 @@ namespace VideoSharingWebApp.Models
         public int Id { get; set; }
         public string Tag { get; set; }
     }
+    public enum Tags
+    {
+        Tag
+    }
 }

@@ -31,5 +31,9 @@ namespace VideoSharingWebApp.Models
         }
 
         public System.Data.Entity.DbSet<VideoSharingWebApp.Models.VideoModel> VideoModels { get; set; }
+
+        public System.Data.Entity.DbSet<VideoSharingWebApp.Models.TagModel> TagModels { get; set; }
+
+        public System.Data.Entity.DbSet<VideoSharingWebApp.Models.VideoTagsModel> VideoTagsModels { get; set; }
     }
 }
