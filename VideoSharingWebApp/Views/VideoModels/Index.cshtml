@@ -2,39 +2,23 @@
 
 @{
     ViewBag.Title = "Videos";
+    
 }
 
 
 
-<p>
-    @Html.ActionLink("Upload New Video", "AddVideo")
-</p>
-    <table class="table">
-        <tr>
-            <th>
-                Uploader
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>       
-        </tr>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.UserId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Title)
-              
-                </td>
-                <td style="font-size:20px">
-                    @*@Html.ActionLink("Edit", "Edit", new { id = item.Id }) |*@
-                    @Html.ActionLink("Watch", "Details", new { id = item.Id })
-                    @*@Html.ActionLink("Delete", "Delete", new { id = item.Id })*@
-                </td>
-            </tr>
-        }
 
-    </table>
-   
+
+    @foreach (var item in Model)
+    {
+    <div style=" display: inline-block; width: 320px;
+     padding: 10px; margin: 10px; border:2px groove ">
+    
+        <b>Title: @Html.DisplayFor(modelItem => item.Title)</b>
+        <p>Author: @Html.DisplayFor(modelItem => item.UserId)</p>
+        <button>@Html.ActionLink("Watch", "Details", new { id = item.Id })</button>
+
+    </div>
+
+    }
+
