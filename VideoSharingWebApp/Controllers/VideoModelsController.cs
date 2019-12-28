@@ -56,7 +56,7 @@ namespace VideoSharingWebApp.Controllers
         //public string path = "";
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,UserId,Title,Path,UploadTime")] VideoModel videoModel)
+        public ActionResult Create([Bind(Include = "Id,UserId,Title,Path,UploadTime,VideoDesc")] VideoModel videoModel)
         {
             if (ModelState.IsValid)
             {
@@ -120,7 +120,7 @@ namespace VideoSharingWebApp.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,UserId,Title,Path,UploadTime")] VideoModel videoModel)
+        public ActionResult Edit([Bind(Include = "Id,UserId,Title,Path,UploadTime,VideoDesc")] VideoModel videoModel)
         {
             if (ModelState.IsValid)
             {
