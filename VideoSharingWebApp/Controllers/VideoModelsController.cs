@@ -18,8 +18,13 @@ namespace VideoSharingWebApp.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: VideoModels
-        public ActionResult Index()
+        public ActionResult Index(string SearchString)
         {
+            if(SearchString != null)
+            {
+
+                return View(db.VideoModels.Where(x => x.Title.Contains(SearchString)));
+            }
             return View(db.VideoModels.ToList());
         }
 

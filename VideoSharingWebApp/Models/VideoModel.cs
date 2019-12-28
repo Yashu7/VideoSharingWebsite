@@ -12,5 +12,6 @@ namespace VideoSharingWebApp.Models
         public string Title { get; set; }
         public string Path { get; set; }
         public DateTime UploadTime { get; set; }
+        public string VideoDesc { get; set; }
     }
 }
