@@ -1,0 +1,12 @@
+﻿@model IEnumerable<VideoSharingWebApp.ViewModels.VideoCommentsViewModel>
+
+
+
+@foreach (var item in Model)
+{
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.videoModel.Title)
+        </td>
+    </tr>
+}

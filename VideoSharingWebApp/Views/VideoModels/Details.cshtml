@@ -1,4 +1,4 @@
-﻿@model VideoSharingWebApp.Models.VideoModel
+﻿@model VideoSharingWebApp.ViewModels.VideoCommentsViewModel
 
 @{
     ViewBag.Title = "Details";
@@ -16,7 +16,7 @@
   max-width:300px;
   transform:initial;
 " controls>
-        <source src="@Html.DisplayFor(model => model.Path)" type="video/mp4">
+        <source src="@Html.DisplayFor(model => model.videoModel.Path)" type="video/mp4">
 
         Your browser does not support HTML5 video.
     </video>
@@ -27,20 +27,20 @@
             Title:
         </dt>
         <dd style="font-size:20px">
-            @Html.DisplayFor(model => model.Title)
+            @Html.DisplayFor(model => model.videoModel.Title)
         </dd>
         <dt style="font-size:20px">
             Description:
         </dt>
         <dd style="font-size:20px">
-            @Html.DisplayFor(model => model.VideoDesc)
+            @Html.DisplayFor(model => model.videoModel.VideoDesc)
         </dd>
         <dt style="font-size:20px">
             Creator:
         </dt>
 
         <dd style="font-size:20px">
-            @Html.DisplayFor(model => model.UserId)
+            @Html.DisplayFor(model => model.videoModel.UserId)
         </dd>
 
         <dt style="font-size:20px">
@@ -48,15 +48,24 @@
         </dt>
 
         <dd style="font-size:20px">
-            @Html.DisplayFor(model => model.UploadTime.Day)
-            @Html.DisplayFor(model => model.UploadTime.Month)
-            @Html.DisplayFor(model => model.UploadTime.Year)
+            @Html.DisplayFor(model => model.videoModel.UploadTime.Day)
+            @Html.DisplayFor(model => model.videoModel.UploadTime.Month)
+            @Html.DisplayFor(model => model.videoModel.UploadTime.Year)
 
         </dd>
-
+       
+    </dl>
+    <p style="font-size:25px">Comments</p>
+    <dl style="font-size:20px">
+        @foreach (var m in Model.commentModel)
+        {
+        <dd>
+            @Html.DisplayFor(model => m.Comment)
+        </dd>
+        }
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.videoModel.Id }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

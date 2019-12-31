@@ -9,6 +9,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using VideoSharingWebApp.Models;
+using VideoSharingWebApp.ViewModels;
 
 namespace VideoSharingWebApp.Controllers
 {
@@ -16,7 +17,7 @@ namespace VideoSharingWebApp.Controllers
     {
         public static string path;
         private ApplicationDbContext db = new ApplicationDbContext();
-
+        
         // GET: VideoModels
         public ActionResult Index(string SearchString)
         {
@@ -35,12 +36,30 @@ namespace VideoSharingWebApp.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            VideoModel videoModel = db.VideoModels.Find(id);
-            if (videoModel == null)
+            VideoCommentsViewModel vm = new VideoCommentsViewModel
             {
-                return HttpNotFound();
+                videoModel = db.VideoModels.Find(id)
+            };
+            //VideoModel videoModel = db.VideoModels.Find(id);
+            foreach (var c in db.CommentModels)
+            {
+                if(c.VideoId == vm.videoModel.Id)
+                {
+                    vm.commentModel.Add(c);
+                }
+
             }
-            return View(videoModel);
+            if(vm.commentModel == null)
+            {
+                vm.commentModel.Add(new CommentModel { Id=0,Comment="",VideoId=0});
+            }
+            
+
+            //if (videoModel == null)
+            //{
+            //    return HttpNotFound();
+            //}
+            return View(vm);
         }
 
         // GET: VideoModels/Create
