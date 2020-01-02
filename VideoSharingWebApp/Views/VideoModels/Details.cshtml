@@ -53,19 +53,34 @@
             @Html.DisplayFor(model => model.videoModel.UploadTime.Year)
 
         </dd>
-       
+
     </dl>
     <p style="font-size:25px">Comments</p>
     <dl style="font-size:20px">
+        
         @foreach (var m in Model.commentModel)
         {
-        <dd>
-            @Html.DisplayFor(model => m.Comment)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => m.Comment)
+            </dd>
         }
     </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.videoModel.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+    @using (Html.BeginForm("Details", "VideoModels", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.EditorFor(model => model.newCommentModel.Comment, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+        <div class="form-group">
+            @Html.EditorFor(model => model.newCommentModel.VideoId, new { htmlAttributes = new { @class = "form-control", @Value = Model.videoModel.Id } })
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Details" class="btn btn-default" />
+            </div>
+            }
+        </div>
+        <p>
+            @Html.ActionLink("Edit", "Edit", new { id = Model.videoModel.Id }) |
+            @Html.ActionLink("Back to List", "Index")
+        </p>

@@ -10,5 +10,6 @@ namespace VideoSharingWebApp.ViewModels
     {
         public VideoModel videoModel { get; set; }
         public List<CommentModel> commentModel { get; set; } = new List<CommentModel>();
+        public CommentModel newCommentModel { get; set; }
     }
 }

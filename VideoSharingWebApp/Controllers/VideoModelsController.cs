@@ -17,7 +17,22 @@ namespace VideoSharingWebApp.Controllers
     {
         public static string path;
         private ApplicationDbContext db = new ApplicationDbContext();
-        
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Details([Bind(Include = "videoModel,commentModel,newCommentModel")] VideoCommentsViewModel CM)
+            {
+            if (ModelState.IsValid)
+            {
+                
+                    db.CommentModels.Add(CM.newCommentModel);
+                db.SaveChanges();
+                return Details(CM.newCommentModel.VideoId);
+            }
+
+            return Details(CM.newCommentModel.VideoId);
+        }
         // GET: VideoModels
         public ActionResult Index(string SearchString)
         {
