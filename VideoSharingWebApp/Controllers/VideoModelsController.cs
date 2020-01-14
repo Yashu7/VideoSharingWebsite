@@ -34,6 +34,18 @@ namespace VideoSharingWebApp.Controllers
 
             return View();
         }
+        
+        public JsonResult GetThatJavaScript(VideoModel vm)
+        {
+            VideoModel videoModel = db.VideoModels.Find(vm.Id);
+            videoModel.Views = videoModel.Views + 1;
+            db.Entry(videoModel).State = EntityState.Modified;
+            db.SaveChanges();
+            return Json(db.VideoModels.Where(x=>x.Id == vm.Id), JsonRequestBehavior.AllowGet);
+        }
+        
+       
+
         // GET: VideoModels
         public ActionResult Index(string SearchString)
         {

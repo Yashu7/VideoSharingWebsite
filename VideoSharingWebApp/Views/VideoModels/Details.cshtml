@@ -7,7 +7,7 @@
 
 
 <div>
-    <video class="dl-horizontal" style="display:block; margin-left:auto;margin-right:auto; grid-template:auto; object-fit:fill;
+    <video id="vidya" class="dl-horizontal" style="display:block; margin-left:auto;margin-right:auto; grid-template:auto; object-fit:fill;
   position: relative;
   overflow: hidden;
   width: 100%;
@@ -82,9 +82,37 @@
         <div class="form-group">
             <input type="submit" value="Post Comment" class="btn btn-default" />
             </div>
-            }
+    }
         </div>
         <p>
             @Html.ActionLink("Edit", "Edit", new { id = Model.videoModel.Id }) |
             @Html.ActionLink("Back to List", "Index")
         </p>
+       
+      
+        <script type="text/javascript">
+
+            var h = document.getElementsByTagName('video')[0];
+            h.addEventListener("ended", function () { CountView(); }, true);
+           
+            function CountView () {
+
+                var id = { Id: "@Model.videoModel.Id" };
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("GetThatJavaScript")',
+                    cache: false,
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(id)
+                })
+            };
+            
+            
+
+            
+           
+           
+            
+        </script>
+        
