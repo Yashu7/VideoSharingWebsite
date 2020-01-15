@@ -112,10 +112,18 @@ namespace VideoSharingWebApp.Controllers
             if (ModelState.IsValid)
             {
                 
-                //videoModel.Path = path;
+                
+                //Grab username and date for a video.
                 videoModel.UserId = User.Identity.GetUserName();
                 videoModel.UploadTime = DateTime.Today;
-                videoModel.Thumbnail = VideoConverter(videoModel.Path.ToString());
+
+                //Get video file data
+                List<string> VideoData = new List<string>();
+                VideoData = VideoConverter(videoModel.Path.ToString());
+                videoModel.Thumbnail = VideoData[0];
+                videoModel.Path = VideoData[1];
+
+                //Save model to database.
                 db.VideoModels.Add(videoModel);
                 db.SaveChanges();
                 
@@ -134,6 +142,7 @@ namespace VideoSharingWebApp.Controllers
         {
             return View();
         }
+       
         //Uploading File from view to server.
         [HttpPost]
         public ActionResult AddVideo(HttpPostedFileBase file)
@@ -143,36 +152,49 @@ namespace VideoSharingWebApp.Controllers
             //Check if file is mp4.
             if (path.EndsWith(".mp4"))
             {
+                //where to save a file.
                 path = Path.Combine(Server.MapPath("~/Videos"),
                                             Path.GetFileName(file.FileName));
+
+                
                 file.SaveAs(path);
                 
-                
-                
-                path = @"/Videos/" + Path.GetFileName(file.FileName);
+                //Format path for view
+                path = @"/" + Path.GetFileName(file.FileName);
                 ViewBag.Message = "File uploaded successfully";
                 return RedirectToAction("Create");
             }
             return View();
         }
-
-         public string  VideoConverter(string output)
+        
+        //Convert video, Create thumbnail, Pass correct paths for model back
+         public List<string> VideoConverter(string output)
         {
-            OutputSettings outputSettings = new OutputSettings
-            {
-                VideoFrameSize = "640x320"
-            };
+            
+            List<string> videoData = new List<string>();
+            string thumbnailName = output.Substring(1) + ".jpg";
+            string convertedFileName = output.Substring(1);
+
+            //Initialize converter
+            var ffconverter = new FFMpegConverter();
             ConvertSettings convertSettings = new ConvertSettings
             {
-                VideoFrameSize = "640x320"
+                VideoFrameSize = "320x180"
             };
             
-            var ffconverter = new FFMpegConverter();
-            string thumbnailName = output.Substring(8) + ".jpg";
-            ffconverter.ConvertMedia((Server.MapPath("~/")+output), "mp4", "ConvertedVideo.mp4", "mp4", convertSettings);
-            ffconverter.GetVideoThumbnail((Server.MapPath("~/") + output), thumbnailName, 5);
-            thumbnailName = "/" + thumbnailName;
-            return thumbnailName;
+
+            //Convert uploaded video to common format/size
+            ffconverter.ConvertMedia((Server.MapPath("~/Videos")+output), "mp4",convertedFileName, "mp4", convertSettings);
+            //Create thumbnail from converted video
+            ffconverter.GetVideoThumbnail((Server.MapPath("~/") + convertedFileName), thumbnailName, 5);
+            System.IO.File.Delete((Server.MapPath("~/Videos")+output));
+            
+
+            //Add correct paths to video and thumbnail for model
+            videoData.Add("/" + thumbnailName);
+            videoData.Add("/" + convertedFileName);
+
+            return videoData;
         }
         // GET: VideoModels/Edit/5
         public ActionResult Edit(int? id)
