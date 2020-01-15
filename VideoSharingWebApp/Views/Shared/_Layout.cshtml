@@ -13,20 +13,22 @@
    
 
     <div class="navbar navbar-inverse navbar-fixed-top">
-        @using (Html.BeginForm("Index", "VideoModels", FormMethod.Get))
-        {
-            <input type="submit" name="submit" value="Search" />
-            @Html.TextBox("SearchString", "", new { @class = "search" })
-
-
-
-
-
-        }
+       
         <div class="container">
             <div class="navbar-header">
 
-                @Html.ActionLink("ShareStation", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                <div style="margin-top:8px;">
+                    @using (Html.BeginForm("Index", "VideoModels", FormMethod.Get))
+                    {
+
+                        <input type="submit" name="submit" value="Search"  />
+                       
+                            @Html.TextBox("SearchString", "", new { @class = "search" })
+                        
+                        
+
+                    }
+                </div>
 
 
 
@@ -35,29 +37,29 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
+
                 </button>
 
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
 
-                    </li>
-                    <li>@Html.ActionLink("Videos", "Index", "VideoModels")</li>
-                    <li>@Html.ActionLink("Upload Video", "AddVideo", "VideoModels")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
+                       
+                        <li>@Html.ActionLink("Videos", "Index", "VideoModels")</li>
+                        <li>@Html.ActionLink("Upload Video", "AddVideo", "VideoModels")</li>
+                        <li>@Html.ActionLink("About", "About", "Home")</li>
+                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    </ul>
 
-                @Html.Partial("_LoginPartial")
+                    @Html.Partial("_LoginPartial")
+                </div>
             </div>
-        </div>
     </div>
             <div class="container body-content">
                 @RenderBody()
                 <hr />
                 <footer>
-                    <p>&copy; @DateTime.Now.Year</p>
+                    <p>&copy; 2019 - @DateTime.Now.Year</p>
                 </footer>
             </div>
 

@@ -9,9 +9,11 @@
     -webkit-transition: width 0.4s ease-in-out;
     transition: width 0.4s ease-in-out;
 }
+
+
 .search:focus {
-        width: 100%;
- }
+    width: 100%;
+}
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;

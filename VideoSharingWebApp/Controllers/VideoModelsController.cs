@@ -10,6 +10,8 @@ using System.Web;
 using System.Web.Mvc;
 using VideoSharingWebApp.Models;
 using VideoSharingWebApp.ViewModels;
+using NReco.VideoConverter;
+using System.Threading.Tasks;
 
 namespace VideoSharingWebApp.Controllers
 {
@@ -17,8 +19,10 @@ namespace VideoSharingWebApp.Controllers
     {
         public static string path;
         private ApplicationDbContext db = new ApplicationDbContext();
-
+       
         
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
@@ -111,8 +115,10 @@ namespace VideoSharingWebApp.Controllers
                 //videoModel.Path = path;
                 videoModel.UserId = User.Identity.GetUserName();
                 videoModel.UploadTime = DateTime.Today;
+                videoModel.Thumbnail = VideoConverter(videoModel.Path.ToString());
                 db.VideoModels.Add(videoModel);
                 db.SaveChanges();
+                
                 return RedirectToAction("Index");
             }
 
@@ -140,11 +146,33 @@ namespace VideoSharingWebApp.Controllers
                 path = Path.Combine(Server.MapPath("~/Videos"),
                                             Path.GetFileName(file.FileName));
                 file.SaveAs(path);
+                
+                
+                
                 path = @"/Videos/" + Path.GetFileName(file.FileName);
                 ViewBag.Message = "File uploaded successfully";
                 return RedirectToAction("Create");
             }
             return View();
+        }
+
+         public string  VideoConverter(string output)
+        {
+            OutputSettings outputSettings = new OutputSettings
+            {
+                VideoFrameSize = "640x320"
+            };
+            ConvertSettings convertSettings = new ConvertSettings
+            {
+                VideoFrameSize = "640x320"
+            };
+            
+            var ffconverter = new FFMpegConverter();
+            string thumbnailName = output.Substring(8) + ".jpg";
+            ffconverter.ConvertMedia((Server.MapPath("~/")+output), "mp4", "ConvertedVideo.mp4", "mp4", convertSettings);
+            ffconverter.GetVideoThumbnail((Server.MapPath("~/") + output), thumbnailName, 5);
+            thumbnailName = "/" + thumbnailName;
+            return thumbnailName;
         }
         // GET: VideoModels/Edit/5
         public ActionResult Edit(int? id)

@@ -16,5 +16,6 @@ namespace VideoSharingWebApp.Models
         public string VideoDesc { get; set; }
 
         public int? Views { get; set; } = 0;
+        public string Thumbnail { get; set; }
     }
 }
